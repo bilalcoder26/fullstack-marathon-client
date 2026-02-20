@@ -68,7 +68,7 @@ const Card = ({
           </span>
         )}
 
-        <h2 className="font-semibold mt-1">
+        <h2 className="font-semibold mt-1 text-lg text-gray-800">
           {title}
         </h2>
 
