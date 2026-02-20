@@ -8,8 +8,9 @@ const Html50Days = () => {
   const navigate = useNavigate();
 
   const cards = [
-    { id: "1", title: "Expanding Card", imageUrl: expandingImg },
-    { id: "2", title: "Progress Bar", imageUrl: progressBar },
+    { id: "1", title: "Expanding Card", imageUrl: expandingImg ,path: "expanding-card" },
+    { id: "2", title: "Progress Bar", imageUrl: progressBar,path: "progress-bar"  },
+    
     { id: "3", title: "Image Gallery" },
     { id: "4", title: "Animated Buttons" },
   ];
@@ -39,7 +40,7 @@ const Html50Days = () => {
             description="Click to expand"
             imageUrl={card.imageUrl}
             category="HTML"
-            onClick={() => navigate(`/project/${card.id}`)}
+            onClick={() => navigate(`/project/${card.id}/expand-card`)}
           />
         ))}
       </div>

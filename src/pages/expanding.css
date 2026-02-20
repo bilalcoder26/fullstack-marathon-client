@@ -1,0 +1,70 @@
+/* Main container */
+.container {
+  display: flex;                 /* Makes children horizontal */
+  justify-content: center;       /* Center horizontally */
+  align-items: center;           /* Center vertically */
+  height: 100vh;                 /* Full screen height */
+  gap: 15px;                     /* Space between cards */
+}
+
+/* Each card */
+.card {
+  position: relative;            /* IMPORTANT for absolute positioning */
+  height: 650px;                 
+  width: 80px;                   /* Small width initially (pipe shape) */
+  border-radius: 50px;           /* Makes cylindrical shape */
+  overflow: hidden;              /* Hide extra image parts */
+  cursor: pointer;
+  transition: all 0.5s ease;     /* Smooth animation */
+}
+
+/* Expanded card */
+.card.active {
+  width: 600px;                  /* Expand width */
+  border-radius: 20px;           /* Change shape */
+}
+
+/* Image inside card */
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;             /* Prevent stretching */
+  transition: transform 0.6s ease;
+}
+
+/* Zoom image when active */
+.card.active img {
+  transform: scale(1.1);
+}
+
+/* Dark overlay */
+/* .overlay {
+  position: absolute;            
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7),
+    transparent
+  );
+} */
+
+/* Text */
+.card h2 {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  font-size: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+/* Show text when active */
+.card.active h2 {
+  opacity: 1;
+  transform: translateY(0);
+}
