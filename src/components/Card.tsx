@@ -57,7 +57,7 @@ const Card = ({
         <img
           src={imageUrl}
           alt={title}
-          className="w-full aspect-[4/3] object-cover"
+          className="w-full aspect-4/3 object-cover"
         />
       )}
 
