@@ -4,6 +4,7 @@ import expandingImg from "../assets/expandingImg.jpeg";
 import progressBar from "../assets/progressBar.png";
 import Layout from "../layout/Layout";
 import FrontendMachineRound from "./FrontendMachineRound";
+import MernApp from "./MernApp";
 
 const FrontendPractice = () => {
   const navigate = useNavigate();
@@ -109,6 +110,7 @@ const FrontendPractice = () => {
         </div>
       </div>
       <FrontendMachineRound />
+      <MernApp />
     </Layout>
   );
 };
