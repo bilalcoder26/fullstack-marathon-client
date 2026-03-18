@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
+import TodoList, { type Todo } from "./TodoList";
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 type InitialStateProp = {
@@ -13,7 +14,8 @@ const TodoApp = () => {
     title: "",
     content: "",
   });
-  console.log(import.meta.env.VITE_API_BASE_URL);
+  const[data, setData] = useState<Todo[]>([]);
+  
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -27,9 +29,27 @@ const TodoApp = () => {
   };
   console.log(todo);
 
+  useEffect(() => {
+  fetchTodos();
+}, []);
+
+const fetchTodos = async () => {
+  const res = await fetch(`${API_URL}/todos`);
+  const data = await res.json();
+  const updatedData = data.map((item: any, index: number) => ({
+    id: item.id ?? index + 1,
+    taskNo: String(index + 1),
+    title: item.title ?? item.content ?? "No Title",
+    description: item.content ?? "No Description",
+    status: item.status ?? "Inprogress",
+    taskId:item._id,
+  }));
+
+  setData(updatedData);
+};
+
   const handleAddTask = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted", todo);
     try {
       const res = await fetch(`${API_URL}/todos`, {
         method: "POST",
@@ -48,6 +68,8 @@ const TodoApp = () => {
 
       // reset form
       setTodo({ title: "", content: "" });
+      // ✅ Refresh list
+    fetchTodos();
     } catch (error) {
       console.error("API Error:", error);
     }
@@ -56,6 +78,23 @@ const TodoApp = () => {
   const isFormEmpty = (obj: InitialStateProp) => {
     return Object.values(obj).some((value) => value.trim() === "");
   };
+
+  const deleteTodo = async(id:string) => {
+    try {
+       const res = await fetch(`${API_URL}/todos/${id}`, {
+        method: "DELETE",
+       
+      });
+      if (!res.ok) {
+        throw new Error(` failed to delete item: ${res.status}`);
+      }
+      fetchTodos();
+
+    } catch (error) {
+      
+    }
+
+  }
 
   return (
     <div className="bg-sky-200 flex flex-col  items-center min-h-screen w-full rounded-xl">
@@ -101,7 +140,7 @@ const TodoApp = () => {
 
       {/* todo list */}
       <div>
-        <p>list</p>
+        <TodoList data={data}  deleteTodo={deleteTodo}/>
       </div>
     </div>
   );
